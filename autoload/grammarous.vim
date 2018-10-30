@@ -28,6 +28,7 @@ let g:grammarous#enable_spell_check              = get(g:, 'grammarous#enable_sp
 let g:grammarous#move_to_first_error             = get(g:, 'grammarous#move_to_first_error', 1)
 let g:grammarous#hooks                           = get(g:, 'grammarous#hooks', {})
 let g:grammarous#languagetool_cmd                = get(g:, 'grammarous#languagetool_cmd', '')
+let g:grammarous#languagetool_extra_flags        = get(g:, 'grammarous#languagetool_extra_flags', '')
 let g:grammarous#show_first_error                = get(g:, 'grammarous#show_first_error', 0)
 let g:grammarous#use_location_list               = get(g:, 'grammarous#use_location_list', 0)
 
@@ -324,6 +325,8 @@ function! s:invoke_check(range_start, ...)
     if !empty(enabled_categories)
         let cmdargs = '--enablecategories ' . join(enabled_categories, ',') . ' ' . cmdargs
     endif
+
+    let cmdargs = g:grammarous#languagetool_extra_flags . ' ' . cmdargs
 
     if g:grammarous#languagetool_cmd !=# ''
         let cmd = printf('%s %s', g:grammarous#languagetool_cmd, cmdargs)
